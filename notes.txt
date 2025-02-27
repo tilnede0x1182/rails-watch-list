@@ -1,0 +1,28 @@
+Schémas de bases de données :
+
+movies
+	id integer auto-increment
+	title string
+	overview text
+	poster_url string
+	rating float
+
+lists
+	id integer auto-increment
+	name string
+
+bookmarks
+	id integer auto-increment
+	comment string
+	movie_id integer foreign_key(movies)
+	list_id integer foreign_key(lists)
+
+Commandes rails :
+
+rails generate model Movie title:string overview:text poster_url:string rating:float
+rails generate model List name:string
+rails generate model Bookmark comment:string movie:references list:references
+
+
+
+
