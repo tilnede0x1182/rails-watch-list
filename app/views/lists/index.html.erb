@@ -6,15 +6,13 @@
 
 <div class="row">
   <% @lists.each do |list| %>
+    <% first_movie = list.bookmarks.first&.movie %>
     <div class="col-md-4 mb-4">
-      <div class="card movie-list-card">
-        <!-- Image par défaut ou placeholder si vous n’avez pas d’images custom -->
-        <img src="https://via.placeholder.com/400x200?text=<%= ERB::Util.url_encode(list.name) %>"
-             class="card-img-top"
-             alt="<%= list.name %>">
+      <div class="card movie-list-card"
+           style="background-image: <%= "url('#{first_movie.poster_url}')" if first_movie %>;">
         <div class="card-body">
-          <h5 class="card-title"><%= list.name %></h5>
-          <%= link_to "Voir la liste", list_path(list), class: "btn btn-outline-light bg-dark" %>
+          <h5 class="card-title text-white"><%= list.name %></h5>
+          <%= link_to "Voir la liste", list_path(list), class: "btn btn-light" %>
         </div>
       </div>
     </div>
