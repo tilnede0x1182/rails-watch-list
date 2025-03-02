@@ -2,12 +2,12 @@
 <% if @list.bookmarks.any? %>
   <% first_movie = @list.bookmarks.first.movie %>
   <div class="banner mb-4" style="background-image: url('<%= first_movie.poster_url %>');">
-    <h1 class="text-white"><%= @list.name %></h1>
+    <h1 class="text-black"><%= @list.name %></h1>
   </div>
 <% else %>
   <!-- Liste vide => bannière par défaut -->
   <div class="banner mb-4" style="background-image: url('https://via.placeholder.com/1200x300?text=<%= ERB::Util.url_encode(@list.name) %>');">
-    <h1 class="text-white"><%= @list.name %></h1>
+    <h1 class="text-black"><%= @list.name %></h1>
   </div>
 <% end %>
 

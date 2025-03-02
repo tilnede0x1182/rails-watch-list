@@ -17,7 +17,7 @@
   background-size: cover;
   background-position: center;
   border-radius: 10px;
-  color: white;
+  color: rgb(0, 0, 0);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,22 +30,29 @@
   }
 }
 
-// Classe .banner pour la bannière en haut de la liste#show
 .banner {
   position: relative;
   width: 100%;
-  height: 300px; // hauteur de la bannière
+  height: 300px;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: flex-end;
   padding: 20px;
+  background-color: #f8f9fa;
 
   h1 {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.8); // 🌟 Fond blanc semi-transparent
     padding: 10px 15px;
-    color: #fff;
+    color: #333; // 🌟 Texte foncé pour lisibilité
     border-radius: 4px;
     font-size: 2rem;
   }
+}
+
+.footer-light {
+  background-color: #f8f9fa; // 🌟 Fond clair
+  color: #333; // 🌟 Texte foncé
+  padding: 15px;
+  font-size: 14px;
 }
