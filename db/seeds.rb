@@ -9,8 +9,10 @@
 #   end
 
 # Suppression des données existantes pour éviter les doublons
+# Suppression des anciens records pour éviter les doublons
 puts "Suppression des anciens records..."
 Bookmark.destroy_all
+Review.destroy_all
 List.destroy_all
 Movie.destroy_all
 
@@ -34,8 +36,8 @@ lists = [
   { name: "Action" },
   { name: "Drama" },
   { name: "Science-Fiction" },
-  { name: "Gril Power" },
-  { name: "All taime favourites" }
+  { name: "Girl Power" },
+  { name: "All Time Favorites" }
 ]
 
 lists.each do |list|
@@ -56,4 +58,27 @@ lists.each do |list|
 end
 puts "Signets ajoutés !"
 
-puts "Seed terminée !"
+# Ajout de commentaires sur les listes (Reviews)
+puts "Ajout d'avis sur les listes..."
+reviews_content = [
+  "J'adore cette sélection, les films sont incroyables !",
+  "Une excellente liste, parfaite pour une soirée cinéma.",
+  "Super choix de films, j'aurais peut-être ajouté quelques classiques.",
+  "Une sélection intéressante, mais certains films ne sont pas à mon goût.",
+  "Parfait pour les amateurs du genre !",
+  "Vraiment bien pensé, chaque film est une pépite.",
+  "J'ai découvert des films que je ne connaissais pas, merci !"
+]
+
+lists.each do |list|
+  rand(1..3).times do # Chaque liste reçoit entre 1 et 3 avis aléatoires
+    Review.create!(
+      list: list,
+      content: reviews_content.sample,
+      rating: rand(1..5) # Note aléatoire entre 1 et 5
+    )
+  end
+end
+puts "Avis ajoutés !"
+
+puts "Seed terminée avec succès ! 🎬"

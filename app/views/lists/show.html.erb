@@ -65,3 +65,50 @@
     <%= f.submit "Ajouter", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<h2 class="mt-5">Avis sur cette liste</h2>
+<hr>
+
+<% if @list.reviews.any? %>
+  <ul class="list-group mb-4">
+    <% @list.reviews.each do |review| %>
+      <li class="list-group-item">
+        <strong>Note :</strong>
+        <%= "⭐️" * review.rating %> <!-- Génère le bon nombre d’étoiles -->
+        (<%= review.rating %>/5)
+        <br>
+        <%= review.content %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucun avis pour cette liste.</p>
+<% end %>
+
+<h3>Ajouter un avis</h3>
+
+<% if @review.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= simple_form_for [@list, @review] do |f| %>
+  <div class="form-group">
+    <%= f.label :content, "Votre avis" %>
+    <%= f.text_area :content, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="form-group mt-2">
+    <%= f.label :rating, "Note (1 à 5)" %>
+    <%= f.select :rating, options_for_select((1..5).to_a), {}, class: "form-select" %>
+  </div>
+
+  <div class="mt-3">
+    <%= f.submit "Envoyer", class: "btn btn-primary" %>
+  </div>
+<% end %>
