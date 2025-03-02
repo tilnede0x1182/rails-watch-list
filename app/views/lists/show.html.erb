@@ -1,17 +1,24 @@
 <!-- On peut choisir la "bannière" à partir du premier film bookmarké, ou un placeholder si la liste est vide -->
-<% if @list.bookmarks.any? %>
+<% if @list.photo.attached? %>
+  <!-- 1️⃣ Si une image a été uploadée via Active Storage -->
+  <div class="banner mb-4" style="background-image: url('<%= url_for(@list.photo) %>');">
+    <h1 class="text-black"><%= @list.name %></h1>
+  </div>
+<% elsif @list.bookmarks.any? %>
+  <!-- 2️⃣ Sinon, si la liste a un film bookmarké, on prend son affiche -->
   <% first_movie = @list.bookmarks.first.movie %>
   <div class="banner mb-4" style="background-image: url('<%= first_movie.poster_url %>');">
     <h1 class="text-black"><%= @list.name %></h1>
   </div>
 <% else %>
-  <!-- Liste vide => bannière par défaut -->
-  <div class="banner mb-4" style="background-image: url('https://via.placeholder.com/1200x300?text=<%= ERB::Util.url_encode(@list.name) %>');">
+  <!-- 3️⃣ Sinon, image par défaut -->
+  <div class="banner mb-4" style="background-image: url('<%= asset_path("default_banner.jpg") %>');">
     <h1 class="text-black"><%= @list.name %></h1>
   </div>
 <% end %>
 
 <div class="mb-3">
+  <%= link_to "Modifier la liste", edit_list_path(@list), class: "btn btn-warning" %>
   <%= link_to "Retour aux listes", lists_path, class: "btn btn-secondary" %>
 </div>
 
@@ -31,7 +38,6 @@
 						<%= link_to "Supprimer", bookmark_path(bookmark),
 								data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr ?" },
 								class: "btn btn-danger" %>
-
           </div>
         </div>
       </div>

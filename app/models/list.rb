@@ -3,5 +3,6 @@ class List < ApplicationRecord
   has_many :movies, through: :bookmarks
   has_many :reviews, dependent: :destroy
 
+  has_one_attached :photo  # Active Storage pour l'upload d'image
   validates :name, presence: true, uniqueness: true
 end
