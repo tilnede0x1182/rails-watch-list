@@ -26,3 +26,4 @@ rails generate model Bookmark comment:string movie:references list:references
 
 
 
+

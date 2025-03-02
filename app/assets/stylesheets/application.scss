@@ -10,3 +10,41 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.movie-list-card {
+  background-color: #333;
+  color: white;
+  border: none;
+  .card-body {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  img {
+    opacity: 0.8;
+  }
+  &:hover {
+    img {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+  }
+}
+
+// Classe .banner pour la bannière en haut de la liste#show
+.banner {
+  position: relative;
+  width: 100%;
+  height: 300px; // hauteur de la bannière
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+
+  h1 {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 2rem;
+  }
+}

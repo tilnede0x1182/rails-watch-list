@@ -1,0 +1,22 @@
+<h1 class="mb-4">Toutes mes listes</h1>
+
+<div class="mb-3">
+  <%= link_to "Créer une nouvelle liste", new_list_path, class: "btn btn-primary" %>
+</div>
+
+<div class="row">
+  <% @lists.each do |list| %>
+    <div class="col-md-4 mb-4">
+      <div class="card movie-list-card">
+        <!-- Image par défaut ou placeholder si vous n’avez pas d’images custom -->
+        <img src="https://via.placeholder.com/400x200?text=<%= ERB::Util.url_encode(list.name) %>"
+             class="card-img-top"
+             alt="<%= list.name %>">
+        <div class="card-body">
+          <h5 class="card-title"><%= list.name %></h5>
+          <%= link_to "Voir la liste", list_path(list), class: "btn btn-outline-light bg-dark" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
