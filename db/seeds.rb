@@ -9,26 +9,31 @@
 #   end
 
 # Suppression des données existantes pour éviter les doublons
-# Suppression des anciens records pour éviter les doublons
+require "open-uri"
+require "json"
+
+# Suppression des anciens records
 puts "Suppression des anciens records..."
 Bookmark.destroy_all
 Review.destroy_all
 List.destroy_all
 Movie.destroy_all
 
-# Création des films (comme dans l'énoncé)
-puts "Création des films..."
-movies = [
-  { title: "Wonder Woman 1984", overview: "Wonder Woman entre en conflit avec l'Union soviétique pendant la Guerre Froide.", poster_url: "https://image.tmdb.org/t/p/original/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg", rating: 6.9 },
-  { title: "The Shawshank Redemption", overview: "Un banquier est condamné à tort pour un double meurtre.", poster_url: "https://image.tmdb.org/t/p/original/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", rating: 8.7 },
-  { title: "Titanic", overview: "L'histoire du Titanic racontée par une survivante âgée de 101 ans.", poster_url: "https://image.tmdb.org/t/p/original/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", rating: 7.9 },
-  { title: "Ocean's Eight", overview: "Une équipe de voleuses prépare le casse du siècle.", poster_url: "https://image.tmdb.org/t/p/original/MvYpKlpFukTivnlBhizGbkAe3v.jpg", rating: 7.0 }
-]
+# Récupération des films via l'API TMDB
+puts "Récupération des films depuis l'API..."
+url = "https://tmdb.lewagon.com/movie/top_rated"
+movies_serialized = URI.open(url).read
+movies = JSON.parse(movies_serialized)["results"]
 
-movies.each do |movie|
-  Movie.create!(movie)
+movies.first(20).each do |movie| # On limite à 20 films pour éviter un seed trop long
+  Movie.create!(
+    title: movie["title"],
+    overview: movie["overview"],
+    poster_url: "https://image.tmdb.org/t/p/original#{movie["poster_path"]}",
+    rating: movie["vote_average"]
+  )
 end
-puts "Films créés !"
+puts "Films récupérés et ajoutés !"
 
 # Création des listes
 puts "Création des listes..."
@@ -45,7 +50,7 @@ lists.each do |list|
 end
 puts "Listes créées !"
 
-# Ajout automatique de quelques bookmarks pour tester
+# Ajout automatique de bookmarks
 puts "Ajout de signets..."
 lists = List.all
 movies = Movie.all
@@ -58,7 +63,7 @@ lists.each do |list|
 end
 puts "Signets ajoutés !"
 
-# Ajout de commentaires sur les listes (Reviews)
+# Ajout de commentaires sur les listes
 puts "Ajout d'avis sur les listes..."
 reviews_content = [
   "J'adore cette sélection, les films sont incroyables !",
@@ -71,11 +76,11 @@ reviews_content = [
 ]
 
 lists.each do |list|
-  rand(1..3).times do # Chaque liste reçoit entre 1 et 3 avis aléatoires
+  rand(1..3).times do
     Review.create!(
       list: list,
       content: reviews_content.sample,
-      rating: rand(1..5) # Note aléatoire entre 1 et 5
+      rating: rand(1..5)
     )
   end
 end
